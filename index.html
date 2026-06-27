@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>StudyFlow</title><script src="https://cdn.tailwindcss.com"></script><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{background:#FFFFFF;color:#1a237e;min-height:100vh}
+.au{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8eaf6 0%,#ffffff 50%,#e8eaf6 100%);padding:20px}
+.ac{background:#ffffff;border:1px solid #c5cae9;border-radius:20px;padding:40px;width:100%;max-width:380px;box-shadow:0 4px 24px rgba(26,35,126,.08)}
+.ac .lg{text-align:center;margin-bottom:28px}
+.ac .lg h1{font-size:26px;font-weight:700;color:#1a237e}
+.ac .lg p{font-size:15px;color:#7986cb;margin-top:4px}
+.tba{display:flex;gap:4px;background:#e8eaf6;border-radius:12px;padding:3px;margin-bottom:24px}
+.tba div{flex:1;padding:10px;font-size:15px;font-weight:500;border-radius:10px;cursor:pointer;color:#7986cb;text-align:center;transition:.2s}
+.tba div.on{background:#1a237e;color:#ffffff}
+.ac label{font-size:14px;color:#5c6bc0;display:block;margin-bottom:4px;font-weight:500}
+.ac input{width:100%;padding:12px 16px;border:1px solid #c5cae9;border-radius:10px;font-size:16px;outline:none;margin-bottom:14px;background:#fafbff;color:#1a237e}
+.ac input:focus{border-color:#3f51b5;box-shadow:0 0 0 3px rgba(63,81,181,.1)}
+.ab{width:100%;padding:12px;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;background:#1a237e;color:#ffffff;transition:.2s}
+.ab:hover{background:#283593}
+.ae{color:#d32f2f;font-size:14px;text-align:center;min-height:22px;margin-top:12px}
+.ap2{display:none}
+.tb{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 0;max-width:700px;margin:0 auto}
+.tb h1{font-size:22px;font-weight:700;color:#1a237e}
+.tb .ur{display:flex;align-items:center;gap:10px;font-size:15px;color:#5c6bc0}
+.tb .ur button{padding:6px 14px;border:1px solid #c5cae9;border-radius:8px;background:transparent;color:#5c6bc0;cursor:pointer;font-size:13px}
+.tb .ur button:hover{border-color:#d32f2f;color:#d32f2f}
+.nv{display:flex;max-width:700px;margin:24px auto 0;padding:0 24px;border-bottom:2px solid #e8eaf6}
+.nv div{padding:12px 0 14px;font-size:17px;font-weight:500;cursor:pointer;color:#9fa8da;position:relative;margin-right:32px;transition:.2s}
+.nv div::after{content:"";position:absolute;bottom:-2px;left:0;width:100%;height:3px;background:#1a237e;transform:scaleX(0);transition:transform .25s}
+.nv div.on{color:#1a237e;font-weight:600}
+.nv div.on::after{transform:scaleX(1)}
+.ct{max-width:700px;margin:0 auto;padding:24px;width:100%}
+.db{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.db label{font-size:15px;color:#5c6bc0;font-weight:500;white-space:nowrap}
+.db input[type=date]{padding:8px 14px;border:1px solid #c5cae9;border-radius:10px;font-size:16px;outline:none;background:#fafbff;color:#1a237e;cursor:pointer;font-family:inherit}
+.db input[type=date]:focus{border-color:#3f51b5}
+.sc{display:none}
+.sc.on{display:block;animation:fi .25s}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ra textarea{width:100%;min-height:140px;padding:16px;border:1px solid #c5cae9;border-radius:12px;font-size:16px;outline:none;background:#fafbff;color:#1a237e;resize:vertical;line-height:1.7;font-family:inherit}
+.ra textarea:focus{border-color:#3f51b5;box-shadow:0 0 0 3px rgba(63,81,181,.06)}
+.ra textarea::placeholder{color:#9fa8da}
+.sv{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:12px 28px;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;background:#1a237e;color:#ffffff;transition:.2s}
+.sv:hover{background:#283593}
+.sv:disabled{opacity:.5}
+.sm{font-size:15px;color:#43a047;margin-top:8px;min-height:22px}
+.tw{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;min-height:40vh}
+.tn{font-size:86px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:6px;color:#1a237e;font-family:"SF Mono","Consolas",monospace;margin-bottom:24px}
+.tc{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.tb2{padding:12px 32px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:.2s}
+.tbs{color:#1a237e;border:2px solid #1a237e;background:transparent}
+.tbs:hover{background:#1a237e;color:#ffffff}
+.tbp{color:#e65100;border:2px solid #e65100;background:transparent}
+.tbp:hover{background:#e65100;color:#ffffff}
+.tbe{color:#d32f2f;border:2px solid #d32f2f;background:transparent}
+.tbe:hover{background:#d32f2f;color:#ffffff}
+.tbr{color:#757575;border:2px solid #bdbdbd;background:transparent}
+.tbr:hover{background:#757575;color:#ffffff}
+.ts{font-size:15px;color:#5c6bc0;margin-top:16px;min-height:22px}
+.hi{margin-top:28px}
+.hi h3{font-size:16px;color:#5c6bc0;font-weight:500;margin-bottom:14px;letter-spacing:.5px}
+.it{padding:18px 0;border-bottom:1px solid #e8eaf6}
+.it:last-child{border-bottom:none}
+.hd{font-size:14px;color:#5c6bc0;margin-bottom:6px;font-weight:500}
+.hc{font-size:16px;line-height:1.7;margin-bottom:8px;white-space:pre-wrap;color:#37474f}
+.hf{font-size:15px;color:#1a237e;font-weight:600}
+.em{padding:50px 0;text-align:center;color:#9fa8da;font-size:16px}
+.to{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:12px;color:#ffffff;font-size:15px;font-weight:500;z-index:9999;background:#1a237e;animation:tu .35s}
+.to.ok{background:#43a047}
+.to.no{background:#d32f2f}
+@keyframes tu{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* Stats Chart */
+.sc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.sc-header h3{font-size:16px;color:#5c6bc0;font-weight:500}
+.sc-legend{display:flex;gap:16px;font-size:13px}
+.sc-legend span{display:flex;align-items:center;gap:5px}
+.legend-dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.legend-dot.focus{background:#1a237e}
+.legend-dot.tasks{background:#7986cb}
+.sc-bar-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f0f2fa}
+.sc-bar-row:last-child{border-bottom:none}
+.sc-bar-date{width:85px;font-size:14px;font-weight:600;color:#1a237e;flex-shrink:0}
+.sc-bars{flex:1;display:flex;flex-direction:column;gap:4px}
+.sc-bar-track{height:16px;border-radius:8px;background:#e8eaf6;overflow:hidden;position:relative}
+.sc-bar-fill{height:100%;border-radius:8px;transition:width .6s cubic-bezier(.22,1,.36,1);position:relative}
+.sc-bar-fill.focus{background:#1a237e}
+.sc-bar-fill.tasks{background:#7986cb}
+.sc-bar-label{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;color:#ffffff;font-weight:600;white-space:nowrap}
+.sc-bar-value{width:50px;text-align:right;font-size:14px;font-weight:600;color:#1a237e;flex-shrink:0}
+.sc-empty{padding:60px 0;text-align:center;color:#9fa8da;font-size:16px}
+.sc-summary{display:flex;gap:16px;margin:16px 0 20px;flex-wrap:wrap}
+.sc-sum-card{flex:1;background:#f5f7ff;border:1px solid #c5cae9;border-radius:12px;padding:16px 20px;text-align:center;min-width:120px}
+.sc-sum-card .num{font-size:28px;font-weight:700;color:#1a237e}
+.sc-sum-card .lbl{font-size:13px;color:#7986cb;margin-top:4px}
+@media(max-width:480px){.tn{font-size:56px}.sc-bar-date{width:70px;font-size:13px}}
+</style></head><body>
+
+<!-- Auth -->
+<div class="au" id="authP"><div class="ac">
+<div class="lg"><h1>📚 StudyFlow</h1><p>记录每一次深度聚焦</p></div>
+<div class="tba"><div class="on" id="tabLogin" onclick="switchAuth('login')">登录</div><div id="tabReg" onclick="switchAuth('reg')">注册</div></div>
+<div id="fmLogin">
+<label>用户名</label><input id="inpUser" placeholder="输入用户名">
+<label>密码</label><input id="inpPass" type="password" placeholder="输入密码">
+<button class="ab" id="btnAuth" onclick="handleAuth()">登录</button>
+<div class="ae" id="authErr"></div>
+</div>
+</div></div>
+
+<!-- App -->
+<div class="ap2" id="appP">
+<div class="tb"><h1>📚 StudyFlow</h1><div class="ur"><span id="unm"></span><button onclick="doLogout()">退出</button></div></div>
+<div class="nv"><div class="on" onclick="switchTab('rec')">学习记录</div><div onclick="switchTab('foc')">深度专注</div><div onclick="switchTab('sta')">数据统计</div></div>
+<div class="ct">
+
+<!-- Record Tab -->
+<div class="sc on" id="tabRec">
+<div class="db"><label>📅 日期</label><input type="date" id="dateInput" onchange="onDateChange()"></div>
+<div class="ra"><textarea id="rc" placeholder="今天学了什么？写下你的学习心得..."></textarea>
+<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+<button class="sv" onclick="doSave()" id="sb">💾 保存记录</button><span class="sm" id="sm"></span>
+</div></div>
+<div class="hi"><h3>📋 历史记录</h3><div id="hc"><div class="em">还没有学习记录</div></div></div>
+</div>
+
+<!-- Focus Tab -->
+<div class="sc" id="tabFoc"><div class="tw">
+<div class="tn" id="td">00:00:00</div>
+<div class="tc">
+<button class="tb2 tbs" id="stb" onclick="doStart()">▶ 开始专注</button>
+<button class="tb2 tbp" id="ptb" onclick="doPause()" style="display:none">⏸ 暂停</button>
+<button class="tb2 tbe" id="etb" onclick="doEnd()" style="display:none">⏹ 结束</button>
+<button class="tb2 tbr" id="rtb" onclick="doReset()" style="display:none">重置</button>
+</div>
+<div class="ts" id="ts"></div>
+</div></div>
+
+<!-- Stats Tab -->
+<div class="sc" id="tabSta">
+<div id="statsContent"><div class="sc-empty">📊 暂无学习数据</div></div>
+</div>
+
+</div></div>
+
+<script>
+
+/* ============ DATA ============ */
+function getDB(){
+  try { return JSON.parse(localStorage.getItem("sfDB") || "{}") }
+  catch(e) { return {} }
+}
+function saveDB(d){ localStorage.setItem("sfDB", JSON.stringify(d)) }
+
+function getUsers(){
+  var db = getDB()
+  if (!db.users) db.users = {}
+  return db.users
+}
+function saveUsers(u){
+  var db = getDB()
+  db.users = u
+  saveDB(db)
+}
+
+function getRecs(){
+  var db = getDB()
+  if (!db.recs) db.recs = {}
+  if (!db.recs[CU]) db.recs[CU] = {}
+  return db.recs[CU]
+}
+function saveRecs(recs){
+  var db = getDB()
+  if (!db.recs) db.recs = {}
+  db.recs[CU] = recs || getRecs()
+  saveDB(db)
+}
+
+/* ============ AUTH ============ */
+var CU = null
+var isLogin = true
+
+function switchAuth(t){
+  isLogin = (t === "login")
+  document.getElementById("tabLogin").className = isLogin ? "on" : ""
+  document.getElementById("tabReg").className = isLogin ? "" : "on"
+  document.getElementById("btnAuth").textContent = isLogin ? "登录" : "注册"
+  document.getElementById("inpPass").placeholder = isLogin ? "输入密码" : "至少4个字符"
+  document.getElementById("authErr").textContent = ""
+}
+
+function handleAuth(){
+  var u = document.getElementById("inpUser").value.trim()
+  var p = document.getElementById("inpPass").value
+  var err = document.getElementById("authErr")
+  err.textContent = ""
+  if (u.length < 2) { err.textContent = "用户名至少2个字符"; return }
+  if (p.length < 4) { err.textContent = "密码至少4个字符"; return }
+  var users = getUsers()
+  if (isLogin) {
+    if (!users[u] || users[u] !== p) { err.textContent = "用户名或密码错误"; return }
+  } else {
+    if (users[u]) { err.textContent = "用户名已存在"; return }
+    users[u] = p
+    saveUsers(users)
+  }
+  CU = u
+  localStorage.setItem("sfCU", CU)
+  enterApp()
+}
+
+function enterApp(){
+  document.getElementById("authP").style.display = "none"
+  document.getElementById("appP").style.display = "block"
+  document.getElementById("unm").textContent = "👤 " + CU
+  document.getElementById("dateInput").value = fmtDate(new Date())
+  initUI()
+}
+
+function doLogout(){
+  if (!confirm("确定退出？")) return
+  localStorage.removeItem("sfCU")
+  CU = null
+  document.getElementById("authP").style.display = ""
+  document.getElementById("appP").style.display = "none"
+}
+
+/* ============ TABS ============ */
+function switchTab(t){
+  document.querySelectorAll(".nv div").forEach(function(e){ e.classList.remove("on") })
+  document.querySelectorAll(".sc").forEach(function(e){ e.classList.remove("on") })
+  var ids = { rec: "tabRec", foc: "tabFoc", sta: "tabSta" }
+  if (ids[t]) {
+    var idx = { rec: 0, foc: 1, sta: 2 }[t]
+    document.querySelectorAll(".nv div")[idx].classList.add("on")
+    document.getElementById(ids[t]).classList.add("on")
+    if (t === "sta") loadStats()
+  }
+}
+
+/* ============ DATE ============ */
+var curDate = new Date()
+
+function fmtDate(d){
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0")
+}
+
+function onDateChange(){
+  var val = document.getElementById("dateInput").value
+  if (!val) return
+  var parts = val.split("-")
+  curDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]))
+  document.getElementById("rc").value = ""
+  document.getElementById("sm").textContent = ""
+  loadHistory()
+  loadStats()
+}
+
+/* ============ SAVE RECORD ============ */
+function doSave(){
+  var btn = document.getElementById("sb")
+  btn.disabled = true; btn.textContent = "保存中..."
+  var date = document.getElementById("dateInput").value
+  var content = document.getElementById("rc").value.trim()
+  var recs = getRecs()
+  if (!recs[date]) recs[date] = { content: "", focus: 0 }
+  recs[date].content = content
+  saveRecs(recs)
+  document.getElementById("sm").textContent = "✅ 保存成功"
+  toast("学习记录已保存", "ok")
+  btn.disabled = false; btn.textContent = "💾 保存记录"
+  loadHistory()
+  loadStats()
+}
+
+/* ============ TIMER ============ */
+var TS = { running: false, seconds: 0, interval: null, paused: false, startTime: null }
+
+function fmtDur(s){
+  var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), se = s % 60
+  var r = ""
+  if (h > 0) r += h + "小时"
+  if (m > 0 || h > 0) r += m + "分钟"
+  r += se + "秒"
+  return r
+}
+function fmtTime(s){
+  return String(Math.floor(s / 3600)).padStart(2,"0") + ":" +
+         String(Math.floor((s % 3600) / 60)).padStart(2,"0") + ":" +
+         String(s % 60).padStart(2,"0")
+}
+
+function saveTimer(){
+  localStorage.setItem("sfTS", JSON.stringify({
+    seconds: TS.seconds, running: TS.running, paused: TS.paused, startTime: TS.startTime
+  }))
+}
+
+function restoreTimer(){
+  try {
+    var r = localStorage.getItem("sfTS")
+    if (!r) return
+    var s = JSON.parse(r)
+    if (s.running && s.startTime) {
+      TS.seconds = s.seconds + Math.floor((Date.now() - s.startTime) / 1000)
+      TS.running = true; TS.paused = false; TS.startTime = Date.now()
+      document.getElementById("td").textContent = fmtTime(TS.seconds)
+      runInterval()
+      document.getElementById("stb").style.display = "none"
+      document.getElementById("ptb").style.display = ""
+      document.getElementById("etb").style.display = ""
+      document.getElementById("ts").textContent = "⏱️ 已从刷新中恢复"
+    } else if (s.paused) {
+      TS.seconds = s.seconds; TS.paused = true
+      document.getElementById("td").textContent = fmtTime(TS.seconds)
+      document.getElementById("stb").textContent = "▶ 继续"
+      document.getElementById("stb").style.display = ""
+      document.getElementById("ptb").style.display = "none"
+      document.getElementById("etb").style.display = ""
+      document.getElementById("rtb").style.display = ""
+      document.getElementById("ts").textContent = "⏸ 已暂停"
+    }
+  } catch(e) {}
+}
+
+function runInterval(){
+  clearInterval(TS.interval)
+  TS.interval = setInterval(function(){
+    TS.seconds++
+    document.getElementById("td").textContent = fmtTime(TS.seconds)
+    saveTimer()
+  }, 1000)
+}
+
+function doStart(){
+  if (TS.paused) {
+    TS.paused = false; TS.running = true; TS.startTime = Date.now()
+    runInterval()
+    document.getElementById("stb").style.display = "none"
+    document.getElementById("ptb").style.display = ""
+    document.getElementById("etb").style.display = ""
+    document.getElementById("ts").textContent = "⏱️ 专注中"
+    return
+  }
+  if (TS.running) return
+  TS.seconds = 0; TS.running = true; TS.paused = false; TS.startTime = Date.now()
+  document.getElementById("td").textContent = "00:00:00"
+  runInterval()
+  document.getElementById("stb").style.display = "none"
+  document.getElementById("ptb").style.display = ""
+  document.getElementById("etb").style.display = ""
+  document.getElementById("ts").textContent = "⏱️ 专注中"
+}
+
+function doPause(){
+  if (!TS.running) return
+  clearInterval(TS.interval); TS.interval = null
+  TS.running = false; TS.paused = true
+  document.getElementById("stb").textContent = "▶ 继续"
+  document.getElementById("stb").style.display = ""
+  document.getElementById("ptb").style.display = "none"
+  document.getElementById("etb").style.display = ""
+  document.getElementById("rtb").style.display = ""
+  document.getElementById("ts").textContent = "⏸ 已暂停（" + fmtDur(TS.seconds) + "）"
+  saveTimer()
+}
+
+function doEnd(){
+  if (TS.seconds === 0 && !TS.running && !TS.paused) { toast("还没有开始计时", "no"); return }
+  if (!confirm("已专注 " + fmtDur(TS.seconds) + "\n确定结束本次专注？")) return
+  var secs = TS.seconds
+  var date = fmtDate(new Date())
+  clearInterval(TS.interval); TS.interval = null
+  var recs = getRecs()
+  if (!recs[date]) recs[date] = { content: "", focus: 0 }
+  recs[date].focus = (recs[date].focus || 0) + secs
+  saveRecs(recs)
+  toast("专注 " + fmtDur(secs) + " 已记录", "ok")
+  doReset()
+  loadHistory()
+  loadStats()
+}
+
+function doReset(){
+  clearInterval(TS.interval)
+  TS = { running: false, seconds: 0, interval: null, paused: false, startTime: null }
+  document.getElementById("td").textContent = "00:00:00"
+  localStorage.removeItem("sfTS")
+  document.getElementById("stb").textContent = "▶ 开始专注"
+  document.getElementById("stb").style.display = ""
+  document.getElementById("ptb").style.display = "none"
+  document.getElementById("etb").style.display = "none"
+  document.getElementById("rtb").style.display = "none"
+  document.getElementById("ts").textContent = ""
+}
+
+/* ============ HISTORY ============ */
+function loadHistory(){
+  var recs = getRecs()
+  var keys = Object.keys(recs).sort().reverse()
+  var c = document.getElementById("hc")
+  if (keys.length === 0) { c.innerHTML = '<div class="em">📖 还没有学习记录</div>'; return }
+  c.innerHTML = keys.map(function(k){
+    var r = recs[k]
+    var html = '<div class="it"><div class="hd">📅 ' + k + '</div>'
+    if (r.content && r.content.trim()) html += '<div class="hc">' + escHtml(r.content) + '</div>'
+    else html += '<div class="hc" style="color:#9fa8da">（暂无文字记录）</div>'
+    if (r.focus) html += '<div class="hf">🔥 专注时长：' + fmtDur(r.focus) + '</div>'
+    html += '</div>'
+    return html
+  }).join("")
+}
+
+function escHtml(s){
+  var d = document.createElement("div")
+  d.textContent = s
+  return d.innerHTML
+}
+
+/* ============ STATISTICS ============ */
+function loadStats(){
+  var recs = getRecs()
+  var keys = Object.keys(recs).sort().reverse()
+  var container = document.getElementById("statsContent")
+
+  if (keys.length === 0) {
+    container.innerHTML = '<div class="sc-empty">📊 暂无学习数据</div>'
+    return
+  }
+
+  // Calculate max values for scaling
+  var maxFocus = 0, maxTasks = 0, totalFocus = 0, totalTasks = 0, totalDays = keys.length
+  var dayData = []
+  for (var i = 0; i < keys.length; i++) {
+    var r = recs[keys[i]]
+    var focus = r.focus || 0
+    var taskCount = 0
+    if (r.content && r.content.trim()) {
+      var lines = r.content.split("\n")
+      for (var j = 0; j < lines.length; j++) { if (lines[j].trim()) taskCount++ }
+    }
+    dayData.push({ date: keys[i], focus: focus, tasks: taskCount })
+    if (focus > maxFocus) maxFocus = focus
+    if (taskCount > maxTasks) maxTasks = taskCount
+    totalFocus += focus
+    totalTasks += taskCount
+  }
+
+  // Build chart
+  var html = ''
+
+  // Summary cards
+  html += '<div class="sc-summary">'
+  html += '<div class="sc-sum-card"><div class="num">' + totalDays + '</div><div class="lbl">📅 学习天数</div></div>'
+  html += '<div class="sc-sum-card"><div class="num">' + fmtDur(totalFocus) + '</div><div class="lbl">🔥 总专注时长</div></div>'
+  html += '<div class="sc-sum-card"><div class="num">' + totalTasks + '</div><div class="lbl">📋 总完成任务</div></div>'
+  html += '</div>'
+
+  // Chart header
+  html += '<div class="sc-header">'
+  html += '<h3>每日数据概览</h3>'
+  html += '<div class="sc-legend">'
+  html += '<span><span class="legend-dot focus"></span>专注时长</span>'
+  html += '<span><span class="legend-dot tasks"></span>完成任务</span>'
+  html += '</div></div>'
+
+  // Bar rows (latest first)
+  for (var i = 0; i < dayData.length; i++) {
+    var d = dayData[i]
+    var focusPct = maxFocus > 0 ? Math.max(4, (d.focus / maxFocus) * 100) : 0
+    var tasksPct = maxTasks > 0 ? Math.max(4, (d.tasks / maxTasks) * 100) : 0
+    html += '<div class="sc-bar-row">'
+    html += '<div class="sc-bar-date">' + d.date.slice(5) + '</div>'
+    html += '<div class="sc-bars">'
+    html += '<div class="sc-bar-track"><div class="sc-bar-fill focus" style="width:' + focusPct + '%"><span class="sc-bar-label">' + fmtDur(d.focus) + '</span></div></div>'
+    html += '<div class="sc-bar-track"><div class="sc-bar-fill tasks" style="width:' + tasksPct + '%"><span class="sc-bar-label">' + d.tasks + '项</span></div></div>'
+    html += '</div></div>'
+  }
+
+  container.innerHTML = html
+}
+
+/* ============ TOAST ============ */
+function toast(msg, type){
+  var el = document.createElement("div")
+  el.className = "to " + (type === "ok" ? "ok" : "no")
+  el.textContent = msg
+  document.body.appendChild(el)
+  setTimeout(function(){ el.remove() }, 2500)
+}
+
+/* ============ INIT ============ */
+function initUI(){
+  document.getElementById("rc").value = ""
+  loadHistory()
+  restoreTimer()
+  loadStats()
+}
+
+var savedUser = localStorage.getItem("sfCU")
+if (savedUser) { CU = savedUser; enterApp() }
+
+</script></body></html>
